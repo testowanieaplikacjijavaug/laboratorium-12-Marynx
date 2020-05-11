@@ -1,14 +1,17 @@
 import io.github.bonigarcia.seljup.SeleniumExtension;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SeleniumExtension.class)
 public class Zad3PageObjectTest {
     
     private String title="Selenium";
@@ -17,8 +20,12 @@ public class Zad3PageObjectTest {
     private Zad3PageObject zad3;
     
     @BeforeEach
-    public void setup(ChromeDriver chromeDriver) {
-        this.driver = chromeDriver;
+    public void setup() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         zad3 = new Zad3PageObject(driver);
     }
     

@@ -1,4 +1,5 @@
 import io.github.bonigarcia.seljup.SeleniumExtension;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,21 +7,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SeleniumExtension.class)
 public class Zad2Test {
     
     private WebDriver driver;
     
     private Zad2 zad2;
     
-    public Zad2Test(ChromeDriver chromeDriver) {
-        this.driver = chromeDriver;
+    public Zad2Test() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         zad2 = new Zad2(driver);
     }
     
@@ -34,6 +41,8 @@ public class Zad2Test {
         assertTrue(result);
     }
     
+    
+    //lokalnie przechodzi
     @Test
     public void testLogin9gag(){
         zad2.login("test","test",false);

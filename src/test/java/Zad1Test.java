@@ -1,20 +1,28 @@
 import io.github.bonigarcia.seljup.SeleniumExtension;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SeleniumExtension.class)
 public class Zad1Test {
     
     private WebDriver driver;
     
-    private Zad1 zad1;
+    private  Zad1 zad1;
     
-    public Zad1Test(ChromeDriver chromeDriver) {
-        this.driver = chromeDriver;
+    public Zad1Test() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         zad1 = new Zad1(driver);
     }
     
